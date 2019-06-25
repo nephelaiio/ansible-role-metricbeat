@@ -1,0 +1,9 @@
+---
+metricbeat_package_names_oss: metricbeat-elastic-oss
+metricbeat_package_names_els: metricbeat-elastic
+metricbeat_oss: yes
+metricbeat_package_state: present
+metricbeat_conf_path: /etc/metricbeat/metricbeat.yml
+metricbeat_service_name: metricbeat-elastic
+metricbeat_service_status: started
+metricbeat_service_enabled: yes

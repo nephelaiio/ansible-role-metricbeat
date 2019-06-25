@@ -1,0 +1,19 @@
+---
+- name: restart metricbeat
+  service:
+    name: "{{ metricbeat_service_name }}"
+    state: restarted
+
+- name: install metricbeat template
+  command: |
+    metricbeat setup --template -E {{ metricbeat_cmd_enable }} -E {{ metricbeat_cmd_hosts }}
+  vars:
+    metricbeat_els_hosts: "{{ metricbeat_conf.output.elasticsearch.hosts }}"
+    metricbeat_cmd_enable: "output.elasticsearch.enabled=true"
+    metricbeat_cmd_hosts: "output.elasticsearch.hosts={{ metricbeat_els_hosts | to_json }}"
+  when:
+    - "metricbeat_conf is defined"
+    - "'output' in metricbeat_conf"
+    - "'elasticsearch' in metricbeat_conf.output"
+    - "'hosts' in metricbeat_conf.output.elasticsearch"
+  ignore_errors: yes

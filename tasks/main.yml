@@ -1,0 +1,58 @@
+---
+- name: include variable overrides
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "vars/{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+        - "vars/{{ ansible_distribution }}.yml"
+        - "vars/{{ ansible_os_family }}.yml"
+        - "vars/main.yml"
+  tags:
+    - metricbeat
+
+- name: uninstall metricbeat elastic packages
+  package:
+    name: "{{ metricbeat_package_names_els }}"
+    state: absent
+  when:
+    - (not metricbeat_packages is defined) or (metricbeat_package_names_els not in metricbeat_packages)
+    - metricbeat_oss | bool
+
+- name: install metricbeat oss packages
+  package:
+    name: "{{ metricbeat_packages | default(metricbeat_package_names_oss) }}"
+    state: "{{ metricbeat_package_state }}"
+  when: metricbeat_oss | bool
+  notify: install metricbeat template
+
+- name: uninstall metricbeat oss packages
+  package:
+    name: "{{ metricbeat_package_names_oss }}"
+    state: absent
+  when:
+    - (not metricbeat_packages is defined) or (metricbeat_package_names_oss not in metricbeat_packages)
+    - not (metricbeat_oss | bool)
+
+- name: install metricbeat elastic packages
+  package:
+    name: "{{ metricbeat_packages | default(metricbeat_package_names_els) }}"
+    state: "{{ metricbeat_package_state }}"
+  when: not (metricbeat_oss | bool)
+  notify: install metricbeat template
+
+- name: configure metricbeat
+  copy:
+    content: |
+      # Ansible managed
+
+      {{ metricbeat_conf | to_nice_yaml(indent=2) }}
+    dest: "{{ metricbeat_conf_path }}"
+  notify: restart metricbeat
+  when:
+    - metricbeat_conf is defined
+
+- name: manage metricbeat services
+  service:
+    name: "{{ metricbeat_service_name }}"
+    state: "{{ metricbeat_service_status }}"
+    enabled: "{{ metricbeat_service_enabled }}"
