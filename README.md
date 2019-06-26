@@ -21,9 +21,9 @@ Please review the [dependency configuration](/meta/main.yml) for more details
 - hosts: servers
   vars:
     metricbeat_oss: no
+    metricbeat_package_state: latest
   roles:
      - role: nephelaiio.metricbeat
-       metricbeat_package_state: latest
 ```
 
 ## Testing
