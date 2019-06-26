@@ -50,6 +50,7 @@
   notify: restart metricbeat
   when:
     - metricbeat_conf is defined
+    - metricbeat_conf_manage | bool
 
 - name: manage metricbeat services
   service:
