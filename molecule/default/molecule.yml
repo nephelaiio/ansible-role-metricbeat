@@ -36,17 +36,7 @@ provisioner:
     name: ansible-lint
   inventory:
     vars:
-      metricbeat_conf:
-        metricbeat:
-          monitors:
-            - type: http
-              schedule: '*/1 * * * * * *'
-              urls:
-                - https://www.google.com
-          output:
-            elasticsearch:
-              hosts:
-                - "localhost:9200"
+      molecule_oss: no
 scenario:
   name: default
 verifier:
