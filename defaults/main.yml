@@ -102,7 +102,7 @@ metricbeat_conf_output_logstash_base:
 metricbeat_conf_output_logstash: "{{ metricbeat_conf_output_logstash_base if (metricbeat_conf_logstash_hosts is defined) else {} }}"
 
 metricbeat_conf_output_extra: {}
-metricbeat_conf_output_default: "{{ {} | combine(metricbeat_conf_output_elasticsearch) | combine(metricbeat_conf_output_logstash) | combine(metricbeat_conf_output_extra) }}"
+metricbeat_conf_output_default: "{{ {} | combine(metricbeat_conf_output_elasticsearch, metricbeat_conf_output_logstash, metricbeat_conf_output_extra, recursive=True) }}"
 
 metricbeat_conf_setup_base:
   dashboards:
