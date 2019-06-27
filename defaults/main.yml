@@ -96,9 +96,9 @@ metricbeat_conf_output_elasticsearch_base:
 metricbeat_conf_output_elasticsearch: "{{ metricbeat_conf_output_elasticsearch_base if (metricbeat_conf_elasticsearch_hosts is defined) else {} }}"
 
 metricbeat_conf_output_logstash_base:
-    logstash:
-      enabled: true
-      hosts: "{{ metricbeat_conf_logstash_hosts }}"
+  logstash:
+    enabled: true
+    hosts: "{{ metricbeat_conf_logstash_hosts }}"
 metricbeat_conf_output_logstash: "{{ metricbeat_conf_output_logstash_base if (metricbeat_conf_logstash_hosts is defined) else {} }}"
 
 metricbeat_conf_output_extra: {}
