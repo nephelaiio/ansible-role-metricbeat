@@ -40,6 +40,10 @@
   when: not (metricbeat_oss | bool)
   notify: install metricbeat template
 
+- name: inspect packages
+  package_facts:
+    manager: auto
+
 - name: configure metricbeat
   copy:
     content: |
@@ -49,7 +53,6 @@
     dest: "{{ metricbeat_conf_path }}"
   notify: restart metricbeat
   when:
-    - metricbeat_conf is defined
     - metricbeat_conf_manage | bool
 
 - name: manage metricbeat services
