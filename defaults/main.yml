@@ -32,7 +32,7 @@ metricbeat_conf_docker_metricsets:
   - image
   - memory
   - network
-metricbeat_conf_docker_host: 
+metricbeat_conf_docker_hosts:
   - unix:///var/run/docker.sock
 metricbeat_conf_docker_packages:
   - docker
@@ -63,7 +63,7 @@ metricbeat_conf_nginx_packages:
 metricbeat_conf_nginx_status_path: nginx_status
 metricbeat_conf_nginx_installed: "{{ metricbeat_conf_nginx_packages | intersect(ansible_facts.packages) | length > 0 }}"
 
-metricbeat_conf_modules_base: 
+metricbeat_conf_modules_base:
   - module: system
     metricsets: "{{ metricbeat_conf_system_metricsets }}"
     enabled: "{{ metricbeat_conf_system_enabled | default('yes') }}"
@@ -90,9 +90,9 @@ metricbeat_conf_modules_extra: []
 metricbeat_conf_modules_default: "{{ metricbeat_conf_modules_base + metricbeat_conf_modules_extra }}"
 
 metricbeat_conf_output_elasticsearch_base:
-    elasticsearch:
-      enabled: true
-      hosts: "{{ metricbeat_conf_elasticsearch_hosts }}"
+  elasticsearch:
+    enabled: true
+    hosts: "{{ metricbeat_conf_elasticsearch_hosts }}"
 metricbeat_conf_output_elasticsearch: "{{ metricbeat_conf_output_elasticsearch_base if (metricbeat_conf_elasticsearch_hosts is defined) else {} }}"
 
 metricbeat_conf_output_logstash_base:
