@@ -93,13 +93,13 @@ metricbeat_conf_output_elasticsearch_base:
   elasticsearch:
     enabled: true
     hosts: "{{ metricbeat_conf_elasticsearch_hosts }}"
-metricbeat_conf_output_elasticsearch: "{{ metricbeat_conf_output_elasticsearch_base if (metricbeat_conf_elasticsearch_hosts is defined) else {} }}"
+metricbeat_conf_output_elasticsearch: "{{ {} if (metricbeat_conf_elasticsearch_hosts is not defined) else metricbeat_conf_output_elasticsearch_base }}"
 
 metricbeat_conf_output_logstash_base:
   logstash:
     enabled: true
     hosts: "{{ metricbeat_conf_logstash_hosts }}"
-metricbeat_conf_output_logstash: "{{ metricbeat_conf_output_logstash_base if (metricbeat_conf_logstash_hosts is defined) else {} }}"
+metricbeat_conf_output_logstash: "{{ {} if (metricbeat_conf_logstash_hosts is not defined) else metricbeat_conf_output_logstash_base }}"
 
 metricbeat_conf_output_extra: {}
 metricbeat_conf_output_default: "{{ {} | combine(metricbeat_conf_output_elasticsearch, metricbeat_conf_output_logstash, metricbeat_conf_output_extra, recursive=True) }}"
@@ -113,7 +113,7 @@ metricbeat_conf_setup_base:
     enabled: true
   kibana:
     host: "{{ metricbeat_conf_kibana_host }}"
-metricbeat_conf_setup_default: "{{ metricbeat_conf_setup_base if (metricbeat_conf_kibana_host is defined) else {} }}"
+metricbeat_conf_setup_default: "{{ {} if (metricbeat_conf_kibana_host is not defined) else metricbeat_conf_setup_base }}"
 
 metricbeat_conf_kibana_host: localhost:80
 metricbeat_conf:
