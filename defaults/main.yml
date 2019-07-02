@@ -36,6 +36,7 @@ metricbeat_conf_docker_hosts:
   - unix:///var/run/docker.sock
 metricbeat_conf_docker_packages:
   - docker
+  - docker-ce
   - docker.io
   - docker-engine
 metricbeat_conf_docker_period: 5s
