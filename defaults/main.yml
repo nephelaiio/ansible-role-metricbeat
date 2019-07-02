@@ -57,7 +57,7 @@ metricbeat_conf_nginx_metricsets:
   - stubstatus
 metricbeat_conf_nginx_period: 10s
 metricbeat_conf_nginx_hosts:
-  - http://127.0.0.1
+  - http://localhost
 metricbeat_conf_nginx_packages:
   - nginx
 metricbeat_conf_nginx_status_path: nginx_status
