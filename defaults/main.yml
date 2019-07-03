@@ -98,7 +98,6 @@ metricbeat_conf_modules: "{{ metricbeat_conf_modules_base + metricbeat_conf_modu
 metricbeat_conf_output:
   elasticsearch:
     enabled: "{{ metricbeat_conf_elasticsearch_enabled | default(true) }}"
-    index: "{{ metricbeat_conf_elasticsearch_index | default('metricbeat-%{[agent.version]}-%{+yyyy.MM.dd}') }}"
     hosts: "{{ metricbeat_conf_elasticsearch_hosts | default('localhost:9200') }}"
   logstash:
     enabled: "{{ metricbeat_conf_logstash_enabled | default(false) }}"
@@ -114,9 +113,13 @@ metricbeat_conf_setup:
   kibana:
     host: "{{ metricbeat_conf_kibana_host | default('localhost:80') }}"
 
-metricbeat_conf:
+metricbeat_conf_extra: {}
+
+metricbeat_conf_base:
   metricbeat:
     config:
       modules: "{{ metricbeat_conf_modules }}"
   output: "{{ metricbeat_conf_output }}"
   setup: "{{ metricbeat_conf_setup }}"
+
+metricbeat_conf: "{{ metricbeat_conf_base | combine(metricbeat_conf_extra) }}"
