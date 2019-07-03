@@ -40,7 +40,7 @@ metricbeat_conf_docker_packages:
   - docker.io
   - docker-engine
 metricbeat_conf_docker_period: 5s
-metricbeat_conf_docker_installed: "{{ metricbeat_conf_docker_packages | intersect(ansible_facts.packages) | length > 0 }}"
+metricbeat_conf_docker_installed: "{{ metricbeat_conf_docker_packages | intersect(ansible_facts.packages | list) | length > 0 }}"
 
 metricbeat_conf_postgresql_metricsets:
   - database
@@ -52,7 +52,7 @@ metricbeat_conf_postgresql_packages:
   - postgresql
   - postgresql-server
 metricbeat_conf_postgresql_period: 10s
-metricbeat_conf_postgresql_installed: "{{ metricbeat_conf_postgresql_packages | intersect(ansible_facts.packages) | length > 0 }}"
+metricbeat_conf_postgresql_installed: "{{ metricbeat_conf_postgresql_packages | intersect(ansible_facts.packages | list) | length > 0 }}"
 
 metricbeat_conf_nginx_metricsets:
   - stubstatus
@@ -62,7 +62,7 @@ metricbeat_conf_nginx_hosts:
 metricbeat_conf_nginx_packages:
   - nginx
 metricbeat_conf_nginx_status_path: nginx_status
-metricbeat_conf_nginx_installed: "{{ metricbeat_conf_nginx_packages | intersect(ansible_facts.packages) | length > 0 }}"
+metricbeat_conf_nginx_installed: "{{ metricbeat_conf_nginx_packages | intersect(ansible_facts.packages | list) | length > 0 }}"
 
 metricbeat_conf_modules_base:
   - module: system
