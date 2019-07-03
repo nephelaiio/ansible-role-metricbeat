@@ -98,6 +98,7 @@ metricbeat_conf_modules: "{{ metricbeat_conf_modules_base + metricbeat_conf_modu
 metricbeat_conf_output:
   elasticsearch:
     enabled: "{{ metricbeat_conf_elasticsearch_enabled | default(true) }}"
+    index: "{{ metricbeat_conf_elasticsearch_index | default('metricbeat-%{[agent.version]}-%{+yyyy.MM.dd}') }}"
     hosts: "{{ metricbeat_conf_elasticsearch_hosts | default('localhost:9200') }}"
   logstash:
     enabled: "{{ metricbeat_conf_logstash_enabled | default(false) }}"
