@@ -118,7 +118,8 @@ metricbeat_conf_extra: {}
 metricbeat_conf_base:
   metricbeat:
     config:
-      modules: "{{ metricbeat_conf_modules }}"
+      path: "{{ metricbeat_conf_modules_path | default('/etc/metricbeat/modules.d/*.yml') }}"
+    modules: "{{ metricbeat_conf_modules }}"
   output: "{{ metricbeat_conf_output }}"
   setup: "{{ metricbeat_conf_setup }}"
 
