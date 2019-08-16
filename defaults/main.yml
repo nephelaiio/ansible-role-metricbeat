@@ -64,10 +64,15 @@ metricbeat_conf_nginx_packages:
 metricbeat_conf_nginx_status_path: nginx_status
 metricbeat_conf_nginx_installed: "{{ metricbeat_conf_nginx_packages | intersect(ansible_facts.packages.keys() | list) | length > 0 }}"
 
+metricbeat_conf_cpu_metrics:
+  - percentages
+  - normalized_percentages
+
 metricbeat_conf_modules_base:
   - module: system
     metricsets: "{{ metricbeat_conf_system_metricsets }}"
     enabled: "{{ metricbeat_conf_system_enabled | default('yes') | bool }}"
+    cpu.metrics: "{{ metricbeat_conf_cpu_metrics }}"
   - module: docker
     metricsets: "{{ metricbeat_conf_docker_metricsets }}"
     hosts: "{{ metricbeat_conf_docker_hosts }}"
