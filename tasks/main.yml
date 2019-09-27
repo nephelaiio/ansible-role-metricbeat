@@ -65,7 +65,6 @@
 
 - name: enable yum package lock
   command: "yum versionlock add {{ item }}"
-  ignore_errors: yes
   loop: "{{ [metricbeat_packages | default(metricbeat_package_names_els)] | flatten }}"
   when:
     - ansible_os_family == 'RedHat'
