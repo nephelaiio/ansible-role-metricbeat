@@ -33,12 +33,43 @@
     - (not metricbeat_packages is defined) or (metricbeat_package_names_oss not in metricbeat_packages)
     - not (metricbeat_oss | bool)
 
+- name: install yum version lock support
+  package:
+    name: yum-plugin-versionlock
+  when: ansible_os_family == 'RedHat'
+
+- name: disable yum package lock
+  command: "yum versionlock delete {{ item }}"
+  ignore_errors: yes
+  loop: "{{ [metricbeat_packages | default(metricbeat_package_names_els)] | flatten }}"
+  when: ansible_os_family == 'RedHat'
+
+- name: disable apt package lock
+  command: "apt-mark unhold {{ item }}"
+  loop: "{{ [metricbeat_packages | default(metricbeat_package_names_els)] | flatten }}"
+  when: ansible_os_family == 'Debian'
+
 - name: install metricbeat elastic packages
   package:
     name: "{{ metricbeat_packages | default(metricbeat_package_names_els) }}"
     state: "{{ metricbeat_package_state }}"
   when: not (metricbeat_oss | bool)
   notify: install metricbeat template
+
+- name: enable apt package hold
+  command: "apt-mark hold {{ item }}"
+  loop: "{{ [metricbeat_packages | default(metricbeat_package_names_els)] | flatten }}"
+  when:
+    - ansible_os_family == 'Debian'
+    - metricbeat_version_lock | bool
+
+- name: enable yum package lock
+  command: "yum versionlock add {{ item }}"
+  ignore_errors: yes
+  loop: "{{ [metricbeat_packages | default(metricbeat_package_names_els)] | flatten }}"
+  when:
+    - ansible_os_family == 'RedHat'
+    - metricbeat_version_lock | bool
 
 - name: inspect packages
   package_facts:

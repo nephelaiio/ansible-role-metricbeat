@@ -5,6 +5,8 @@ metricbeat_package_names_oss: metricbeat-oss
 metricbeat_package_names_els: metricbeat
 metricbeat_package_state: present
 
+metricbeat_version_lock: no
+
 metricbeat_service_name: metricbeat
 metricbeat_service_status: started
 metricbeat_service_enabled: yes
