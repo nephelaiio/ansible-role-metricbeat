@@ -43,6 +43,8 @@
   ignore_errors: yes
   loop: "{{ [metricbeat_packages | default(metricbeat_package_names_els)] | flatten }}"
   when: ansible_os_family == 'RedHat'
+  tags:
+    - skip_ansible_lint
 
 - name: disable apt package lock
   command: "apt-mark unhold {{ item }}"
@@ -69,6 +71,8 @@
   when:
     - ansible_os_family == 'RedHat'
     - metricbeat_version_lock | bool
+  tags:
+    - skip_ansible_lint
 
 - name: inspect packages
   package_facts:
