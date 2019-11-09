@@ -34,9 +34,6 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
-  inventory:
-    vars:
-      molecule_oss: no
 scenario:
   name: default
 verifier:
