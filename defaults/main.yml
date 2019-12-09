@@ -1,4 +1,5 @@
 ---
+metricbeat_repo_manage: yes
 metricbeat_package_names: metricbeat
 metricbeat_package_state: present
 metricbeat_package_hold: no
