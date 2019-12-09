@@ -1,6 +1,7 @@
 ---
-metricbeat_package_names_default: metricbeat
+metricbeat_package_names: metricbeat
 metricbeat_package_state: present
+metricbeat_package_hold: present
 
 metricbeat_version_lock: no
 
