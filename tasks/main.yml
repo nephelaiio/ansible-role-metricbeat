@@ -45,14 +45,12 @@
       loop: "{{ [metricbeat_package_names] | flatten }}"
       when:
         - ansible_os_family == 'Debian'
-        - metricbeat_version_lock | bool
 
     - name: enable yum package lock
       command: "yum versionlock add {{ item }}"
       loop: "{{ [metricbeat_package_names] | flatten }}"
       when:
         - ansible_os_family == 'RedHat'
-        - metricbeat_version_lock | bool
       tags:
         - skip_ansible_lint
 
