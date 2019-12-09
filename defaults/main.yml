@@ -1,7 +1,7 @@
 ---
 metricbeat_package_names: metricbeat
 metricbeat_package_state: present
-metricbeat_package_hold: present
+metricbeat_package_hold: yes
 
 metricbeat_service_name: metricbeat
 metricbeat_service_status: started
