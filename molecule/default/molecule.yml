@@ -34,6 +34,9 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+    vars:
+      metricbeat_package_hold: yes
 scenario:
   name: default
 verifier:
