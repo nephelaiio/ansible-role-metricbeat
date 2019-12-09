@@ -1,6 +1,4 @@
 ---
-metricbeat_oss: yes
-
 metricbeat_package_names_default: metricbeat
 metricbeat_package_state: present
 
@@ -69,16 +67,11 @@ metricbeat_conf_cpu_metrics:
   - percentages
   - normalized_percentages
 
-metricbeat_conf_core_metrics:
-  - percentages
-  - normalized_percentages
-
 metricbeat_conf_modules_base:
   - module: system
     metricsets: "{{ metricbeat_conf_system_metricsets }}"
     enabled: "{{ metricbeat_conf_system_enabled | default('yes') | bool }}"
     cpu.metrics: "{{ metricbeat_conf_cpu_metrics }}"
-    core.metrics: "{{ metricbeat_conf_core_metrics }}"
   - module: docker
     metricsets: "{{ metricbeat_conf_docker_metricsets }}"
     hosts: "{{ metricbeat_conf_docker_hosts }}"

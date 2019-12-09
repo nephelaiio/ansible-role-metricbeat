@@ -24,7 +24,6 @@ No configuraton management (useful for upgrades)
 ```
 - hosts: servers
   vars:
-    metricbeat_oss: no
     metricbeat_package_state: latest
     metricbeat_conf_manage: no
   roles:
