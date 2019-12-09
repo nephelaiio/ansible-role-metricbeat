@@ -10,12 +10,6 @@
   tags:
     - metricbeat
 
-- name: install metricbeat packages
-  package:
-    name: "{{ metricbeat_package_names }}"
-    state: "{{ metricbeat_package_state }}"
-  notify: install metricbeat template
-
 - block:
 
     - name: install yum version lock support
@@ -35,6 +29,16 @@
       command: "apt-mark unhold {{ item }}"
       loop: "{{ [metricbeat_package_names] | flatten }}"
       when: ansible_os_family == 'Debian'
+
+  when: metricbeat_package_hold
+
+- name: install metricbeat packages
+  package:
+    name: "{{ metricbeat_package_names }}"
+    state: "{{ metricbeat_package_state }}"
+  notify: install metricbeat template
+
+- block:
 
     - name: enable apt package hold
       command: "apt-mark hold {{ item }}"
