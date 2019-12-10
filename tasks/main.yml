@@ -42,7 +42,6 @@
   package:
     name: "{{ metricbeat_package_names }}"
     state: "{{ metricbeat_package_state }}"
-  notify: install metricbeat template
 
 - block:
 
