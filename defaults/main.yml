@@ -48,7 +48,6 @@ metricbeat_conf_postgresql_metricsets:
 metricbeat_conf_postgresql_hosts:
   - postgres://localhost:5432
 metricbeat_conf_postgresql_packages:
-  - postgresql
   - postgresql-server
 metricbeat_conf_postgresql_period: 10s
 metricbeat_conf_postgresql_installed: "{{ metricbeat_conf_postgresql_packages | intersect(ansible_facts.packages.keys() | list) | length > 0 }}"
