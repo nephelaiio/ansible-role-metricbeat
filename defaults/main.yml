@@ -98,13 +98,18 @@ metricbeat_conf_module_postgresql:
 metricbeat_conf_modules_extra: []
 metricbeat_conf_modules: "{{ metricbeat_conf_modules_base + metricbeat_conf_module_postgresql + metricbeat_conf_modules_extra }}"
 
+metricbeat_conf_elasticsearch_port: 9200
+metricbeat_conf_elasticsearch_hosts: ['localhost']
+metricbeat_conf_logstash_port: 5044
+metricbeat_conf_logstash_hosts: ['localhost']
+
 metricbeat_conf_output:
   elasticsearch:
     enabled: "{{ metricbeat_conf_elasticsearch_enabled | default(true) }}"
-    hosts: "{{ metricbeat_conf_elasticsearch_hosts | default('localhost:9200') }}"
+    hosts: "{{ metricbeat_conf_elasticsearch_hosts | map('map_format', '%s:' + (metricbeat_conf_elasticsearch_port | string)) | list }}"
   logstash:
     enabled: "{{ metricbeat_conf_logstash_enabled | default(false) }}"
-    hosts: "{{ metricbeat_conf_logstash_hosts | default('localhost:5044') }}"
+    hosts: "{{ metricbeat_conf_logstash_hosts | map('map_format', '%s:' + (metricbeat_conf_logstash_port | string)) | list }}"
 
 metricbeat_conf_setup:
   dashboards:
