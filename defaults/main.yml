@@ -123,6 +123,16 @@ metricbeat_conf_setup:
 
 metricbeat_conf_extra: {}
 
+metricbeat_conf_logging:
+  level: warning
+  to_syslog: false
+  to_files: true
+  files:
+    path: /var/log/metricbeat
+    name: metricbeat
+    keepfiles: 7
+    permissions: 0644
+
 metricbeat_conf_base:
   metricbeat:
     config:
@@ -130,5 +140,6 @@ metricbeat_conf_base:
     modules: "{{ metricbeat_conf_modules }}"
   output: "{{ metricbeat_conf_output }}"
   setup: "{{ metricbeat_conf_setup }}"
+  logging: "{{ metricbeat_conf_logging }}"
 
 metricbeat_conf: "{{ metricbeat_conf_base | combine(metricbeat_conf_extra) }}"
