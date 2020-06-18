@@ -4,9 +4,8 @@ dependency:
 driver:
   name: docker
 lint: |
-  set -e
   yamllint .
-  ansible-lint
+  ansible-lint tasks/*
   flake8
 platforms:
   - name: centos7
