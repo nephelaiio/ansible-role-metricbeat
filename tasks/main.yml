@@ -65,7 +65,7 @@
   package_facts:
     manager: auto
 
-- name: configure metricbeat
+- name: manage metricbeat main configuration file
   copy:
     content: |
       # Ansible managed
@@ -75,6 +75,31 @@
   notify: restart metricbeat
   when:
     - metricbeat_conf_manage | bool
+
+- name: prune stale metricbeat module configuration files
+  file:
+    path: "{{ metricbeat_conf_modules_path }}/{{ module_name }}.yml.disabled"
+    state: absent
+  vars:
+    module_name: "{{ module_conf.module }}"
+  loop_control:
+    loop_var: module_conf
+    label: "{{ module_name }}"
+  loop: "{{ metricbeat_conf_modules }}"
+
+- name: manage metricbeat module configuration files
+  copy:
+    dest: "{{ metricbeat_conf_modules_path }}/{{ module_name }}.yml"
+    content: |
+      ---
+      {{ module_conf | to_nice_yaml(indent=2) }}
+  vars:
+    module_name: "{{ module_conf.module }}"
+  loop_control:
+    loop_var: module_conf
+    label: "{{ module_name }}"
+  notify: restart metricbeat
+  loop: "{{ metricbeat_conf_modules }}"
 
 - name: manage metricbeat services
   service:

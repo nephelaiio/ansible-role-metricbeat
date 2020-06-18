@@ -10,6 +10,7 @@ metricbeat_service_enabled: yes
 
 metricbeat_conf_manage: yes
 metricbeat_conf_path: /etc/metricbeat/metricbeat.yml
+metricbeat_conf_modules_path: /etc/metricbeat/modules.d/*.yml
 
 metricbeat_conf_system_metricsets:
   - cpu
@@ -108,6 +109,11 @@ metricbeat_conf_logstash_port: 5044
 metricbeat_conf_logstash_hosts: ['localhost']
 metricbeat_conf_losgstash_loadbalance: true
 
+metricbeat_conf_dashboards_enabled: false
+metricbeat_conf_dashboards_kibana: false
+metricbeat_conf_template_enabled: true
+metricbeat_conf_kibana_host: 'localhost:80'
+
 metricbeat_conf_extra: {}
 
 metricbeat_conf_output_elasticsearch:
@@ -126,19 +132,19 @@ metricbeat_conf_output:
 
 metricbeat_conf_setup:
   dashboards:
-    enabled: "{{ metricbeat_conf_dashboards_enabled | default(false) }}"
+    enabled: "{{ metricbeat_conf_dashboards_enabled }}"
     beat: metricbeat
-    always_kibana: "{{ metricbeat_conf_dashboards_kibana | default(true) }}"
+    always_kibana: "{{ metricbeat_conf_dashboards_kibana }}"
   template:
-    enabled: "{{ metricbeat_conf_template_enabled | default(true) }}"
+    enabled: "{{ metricbeat_conf_template_enabled }}"
   kibana:
-    host: "{{ metricbeat_conf_kibana_host | default('localhost:80') }}"
+    host: "{{ metricbeat_conf_kibana_host }}"
 
 metricbeat_conf_base:
   metricbeat:
     config:
-      path: "{{ metricbeat_conf_modules_path | default('/etc/metricbeat/modules.d/*.yml') }}"
-    modules: "{{ metricbeat_conf_modules }}"
+      modules:
+        path: "{{ metricbeat_conf_modules_path }}"
   output: "{{ metricbeat_conf_output }}"
   setup: "{{ metricbeat_conf_setup }}"
 
