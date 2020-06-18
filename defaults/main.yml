@@ -104,7 +104,7 @@ metricbeat_conf_elasticsearch_port: 9200
 metricbeat_conf_elasticsearch_hosts: ['localhost']
 metricbeat_conf_elasticsearch_loadbalance: true
 
-metricbeat_conf_logstash_enabled: true
+metricbeat_conf_logstash_enabled: false
 metricbeat_conf_logstash_port: 5044
 metricbeat_conf_logstash_hosts: ['localhost']
 metricbeat_conf_logstash_loadbalance: true
