@@ -3,8 +3,11 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
 platforms:
   - name: centos7
     image: centos:7
@@ -32,8 +35,6 @@ platforms:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
   inventory:
     vars:
       metricbeat_package_hold: yes
@@ -41,5 +42,3 @@ scenario:
   name: default
 verifier:
   name: testinfra
-  lint:
-    name: flake8
