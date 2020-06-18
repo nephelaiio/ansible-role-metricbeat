@@ -10,7 +10,7 @@ metricbeat_service_enabled: yes
 
 metricbeat_conf_manage: yes
 metricbeat_conf_path: /etc/metricbeat/metricbeat.yml
-metricbeat_conf_modules_path: /etc/metricbeat/modules.d/*.yml
+metricbeat_conf_modules_path: /etc/metricbeat/modules.d
 
 metricbeat_conf_system_metricsets:
   - cpu
@@ -144,7 +144,7 @@ metricbeat_conf_base:
   metricbeat:
     config:
       modules:
-        path: "{{ metricbeat_conf_modules_path }}"
+        path: "{{ metricbeat_conf_modules_path }}/*.yml"
   output: "{{ metricbeat_conf_output }}"
   setup: "{{ metricbeat_conf_setup }}"
 
