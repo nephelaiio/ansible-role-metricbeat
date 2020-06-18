@@ -3,3 +3,4 @@
   service:
     name: "{{ metricbeat_service_name }}"
     state: restarted
+  when: metricbeat_service_status == 'running'
