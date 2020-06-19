@@ -122,7 +122,7 @@ metricbeat_conf_output_elasticsearch:
   loadbalance: "{{ metricbeat_conf_elasticsearch_loadbalance }}"
 
 metricbeat_conf_output_logstash:
-  enabled: "{{ metricbeat_conf_logstash_enabled | default(false) }}"
+  enabled: "{{ metricbeat_conf_logstash_enabled }}"
   hosts: "{{ metricbeat_conf_logstash_hosts | map('map_format', '%s:' + (metricbeat_conf_logstash_port | string)) | list }}"
   loadbalance: "{{ metricbeat_conf_logstash_loadbalance }}"
 
