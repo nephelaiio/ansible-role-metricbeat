@@ -80,28 +80,24 @@
   file:
     path: "{{ metricbeat_conf_modules_path }}/{{ module_name }}.yml.disabled"
     state: absent
-  vars:
-    module_name: "{{ module_conf.module }}"
   loop_control:
-    loop_var: module_conf
+    loop_var: module_name
     label: "{{ module_name }}"
-  loop: "{{ metricbeat_conf_modules }}"
+  loop: "{{ metricbeat_conf_modules | map(attribute='name') | list | unique }}"
 
 - name: manage metricbeat module configuration files
   copy:
     dest: "{{ metricbeat_conf_modules_path }}/{{ module_name }}.yml"
     content: |
       ---
-      {{ module_conf_item | to_nice_yaml(indent=2) }}
+      {{ module_conf | to_nice_yaml(indent=2) }}
   vars:
-    module_name: "{{ module_conf.module }}"
-    module_conf_item:
-      - "{{ module_conf }}"
+    module_conf: "{{ metricbeat_conf_modules | selectattr('name', 'equalto', module_name) | list }}"
   loop_control:
-    loop_var: module_conf
+    loop_var: module_name
     label: "{{ module_name }}"
   notify: restart metricbeat
-  loop: "{{ metricbeat_conf_modules }}"
+  loop: "{{ metricbeat_conf_modules | map(attribute='name') | list | unique }}"
 
 - name: manage metricbeat services
   service:
