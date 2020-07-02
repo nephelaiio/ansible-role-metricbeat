@@ -83,7 +83,7 @@
   loop_control:
     loop_var: module_name
     label: "{{ module_name }}"
-  loop: "{{ metricbeat_conf_modules | map(attribute='name') | list | unique }}"
+  loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
 
 - name: manage metricbeat module configuration files
   copy:
