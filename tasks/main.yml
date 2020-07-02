@@ -92,12 +92,12 @@
       ---
       {{ module_conf | to_nice_yaml(indent=2) }}
   vars:
-    module_conf: "{{ metricbeat_conf_modules | selectattr('name', 'equalto', module_name) | list }}"
+    module_conf: "{{ metricbeat_conf_modules | selectattr('module', 'equalto', module_name) | list }}"
   loop_control:
     loop_var: module_name
     label: "{{ module_name }}"
   notify: restart metricbeat
-  loop: "{{ metricbeat_conf_modules | map(attribute='name') | list | unique }}"
+  loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
 
 - name: manage metricbeat services
   service:
