@@ -1,7 +1,7 @@
 # nephelaiio.metricbeat
 
-[![Build Status](https://github.com/nephelaiio/ansible-role-elastic-repo/workflows/.github/workflows/main.yml/badge.svg)](https://travis-ci.org/nephelaiio/ansible-role-elastic-repo)
-[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-nephelaiio.elastic-repo-blue.svg)](https://galaxy.ansible.com/nephelaiio/elastic-repo/)
+[![Build Status](https://github.com/nephelaiio/ansible-role-metricbeat/workflows/.github/workflows/main.yml/badge.svg)](https://travis-ci.org/nephelaiio/ansible-role-metricbeat)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-nephelaiio.metricbeat-blue.svg)](https://galaxy.ansible.com/nephelaiio/metricbeat/)
 
 An [ansible role](https://galaxy.ansible.com/nephelaiio/metricbeat) to install and configure metricbeat
 
