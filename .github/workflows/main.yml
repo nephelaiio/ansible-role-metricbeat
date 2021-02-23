@@ -30,12 +30,11 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install yamllint ansible-lint flake8 ansible
+        run: pip3 install ansible-lint[community,yamllint] flake8
 
       - name: Lint code.
         run: |
           set -e
-          yamllint .
           ansible-lint .
           flake8
 
