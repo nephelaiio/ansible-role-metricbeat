@@ -88,11 +88,13 @@
       notify: restart metricbeat
       loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
 
-  when: metricbeat_conf_manage | bool
+  when:
+    - metricbeat_conf_manage | bool
+    - metricbeat_package_state in ['present', 'latest']
 
 - name: manage metricbeat services
   service:
     name: "{{ metricbeat_service_name }}"
     state: "{{ metricbeat_service_status }}"
     enabled: "{{ metricbeat_service_enabled }}"
-  when: metricbeat_service_manage | bool
+  when: metricbeat_package_state in ['present', 'latest']
