@@ -4,7 +4,6 @@ metricbeat_package_names: metricbeat
 metricbeat_package_state: present
 metricbeat_package_hold: no
 
-metricbeat_service_manage: yes
 metricbeat_service_name: metricbeat
 metricbeat_service_status: started
 metricbeat_service_enabled: yes
