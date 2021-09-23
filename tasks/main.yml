@@ -54,42 +54,45 @@
   package_facts:
     manager: auto
 
-- name: manage metricbeat main configuration file
-  copy:
-    content: |
-      # Ansible managed
+- block:
 
-      {{ metricbeat_conf | to_nice_yaml(indent=2) }}
-    dest: "{{ metricbeat_conf_path }}"
-  notify: restart metricbeat
-  when:
-    - metricbeat_conf_manage | bool
+    - name: manage metricbeat main configuration file
+      copy:
+        content: |
+          # Ansible managed
 
-- name: prune stale metricbeat module configuration files
-  file:
-    path: "{{ metricbeat_conf_modules_path }}/{{ module_name }}.yml.disabled"
-    state: absent
-  loop_control:
-    loop_var: module_name
-    label: "{{ module_name }}"
-  loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
+          {{ metricbeat_conf | to_nice_yaml(indent=2) }}
+        dest: "{{ metricbeat_conf_path }}"
+      notify: restart metricbeat
 
-- name: manage metricbeat module configuration files
-  copy:
-    dest: "{{ metricbeat_conf_modules_path }}/{{ module_name }}.yml"
-    content: |
-      ---
-      {{ module_conf | to_nice_yaml(indent=2) }}
-  vars:
-    module_conf: "{{ metricbeat_conf_modules | selectattr('module', 'equalto', module_name) | list }}"
-  loop_control:
-    loop_var: module_name
-    label: "{{ module_name }}"
-  notify: restart metricbeat
-  loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
+    - name: prune stale metricbeat module configuration files
+      file:
+        path: "{{ metricbeat_conf_modules_path }}/{{ module_name }}.yml.disabled"
+        state: absent
+      loop_control:
+        loop_var: module_name
+        label: "{{ module_name }}"
+      loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
+
+    - name: manage metricbeat module configuration files
+      copy:
+        dest: "{{ metricbeat_conf_modules_path }}/{{ module_name }}.yml"
+        content: |
+          ---
+          {{ module_conf | to_nice_yaml(indent=2) }}
+      vars:
+        module_conf: "{{ metricbeat_conf_modules | selectattr('module', 'equalto', module_name) | list }}"
+      loop_control:
+        loop_var: module_name
+        label: "{{ module_name }}"
+      notify: restart metricbeat
+      loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
+
+  when: metricbeat_conf_manage | bool
 
 - name: manage metricbeat services
   service:
     name: "{{ metricbeat_service_name }}"
     state: "{{ metricbeat_service_status }}"
     enabled: "{{ metricbeat_service_enabled }}"
+  when: metricbeat_service_manage | bool
