@@ -80,6 +80,7 @@
         content: |
           ---
           {{ module_conf | to_nice_yaml(indent=2) }}
+        mode: 0640
       vars:
         module_conf: "{{ metricbeat_conf_modules | selectattr('module', 'equalto', module_name) | list }}"
       loop_control:
