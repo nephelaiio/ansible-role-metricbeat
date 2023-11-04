@@ -11,11 +11,11 @@
       when: ansible_os_family == 'RedHat'
       block:
 
-        - name: install yum version lock support
+        - name: Install yum version lock support
           ansible.builtin.package:
             name: yum-plugin-versionlock
 
-        - name: disable yum package lock
+        - name: Disable yum package lock
           community.general.yum_versionlock:
             name: "{{ item }}"
             state: absent
@@ -87,7 +87,7 @@
       loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
       when: metricbeat_conf_manage
 
-    - name: manage metricbeat services
+    - name: Manage metricbeat services
       ansible.builtin.service:
         name: "{{ metricbeat_service_name }}"
         state: "{{ metricbeat_service_status }}"
