@@ -28,6 +28,7 @@ provisioner:
   inventory:
     group_vars:
       all:
+        elasticsearch_repo_major_version: 7
         metricbeat_package_hold: true
         metricbeat_conf_output:
           file:
