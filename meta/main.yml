@@ -18,5 +18,6 @@ galaxy_info:
   galaxy_tags: ['metricbeat']
 
 dependencies:
+  - name: nephelaiio.plugins
   - name: nephelaiio.elastic_repo
     when: metricbeat_repo_manage
