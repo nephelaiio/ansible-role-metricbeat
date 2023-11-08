@@ -93,5 +93,5 @@
       loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
       when: metricbeat_conf_manage
 
-- name: Include service tasks
-  ansible.builtin.include_tasks: service.yml
+    - name: Include service tasks
+      ansible.builtin.include_tasks: service.yml
