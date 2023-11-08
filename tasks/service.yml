@@ -1,0 +1,6 @@
+---
+- name: Manage metricbeat services
+  ansible.builtin.service:
+    name: "{{ metricbeat_service_name }}"
+    state: "{{ metricbeat_service_status }}"
+    enabled: "{{ metricbeat_service_enabled }}"

@@ -63,13 +63,13 @@ Custom configuration, configuration deployed verbatim
 Please make sure your environment has [docker](https://www.docker.com) installed in order to run role validation tests. Additional python dependencies are listed in the [requirements file](https://github.com/nephelaiio/ansible-role-requirements/blob/master/requirements.txt)
 
 Role is tested against the following distributions (docker images):
+  * Ubuntu Jammy
   * Ubuntu Focal
-  * Ubuntu Bionic
-  * Ubuntu Xenial
-  * Debian Stretch
-  * CentOS 7
+  * Debian Bookworm
+  * Debian Bullseye
+  * Rocky Linux 9
 
-You can test the role directly from sources using command ` molecule test `
+You can test the role directly from sources using command ` make test `
 
 ## License
 

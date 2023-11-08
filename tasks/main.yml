@@ -1,4 +1,9 @@
 ---
+- name: Configure elastic repository
+  ansible.builtin.include_role:
+    name: nephelaiio.elastic_repo
+  when: metricbeat_repo_manage
+
 - name: Collect package facts
   ansible.builtin.package_facts:
     manager: auto
@@ -69,6 +74,7 @@
 
           {{ metricbeat_conf | to_nice_yaml(indent=2) }}
         dest: "{{ metricbeat_conf_path }}"
+        mode: 0640
       notify: metricbeat_restart
 
     - name: Manage metricbeat module configuration files
@@ -87,8 +93,5 @@
       loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
       when: metricbeat_conf_manage
 
-    - name: Manage metricbeat services
-      ansible.builtin.service:
-        name: "{{ metricbeat_service_name }}"
-        state: "{{ metricbeat_service_status }}"
-        enabled: "{{ metricbeat_service_enabled }}"
+- name: Include service tasks
+  ansible.builtin.include_tasks: service.yml

@@ -4,7 +4,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
+  - name: metricbeat-8x
     image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2004}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     cgroupns_mode: host
@@ -33,6 +33,6 @@ provisioner:
         metricbeat_conf_output:
           file:
             path: /tmp
-            filename: heartbeat
+            filename: metricbeat
 verifier:
   name: ansible
