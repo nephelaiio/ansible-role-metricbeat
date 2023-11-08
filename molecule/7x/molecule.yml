@@ -33,6 +33,6 @@ provisioner:
         metricbeat_conf_output:
           file:
             path: /tmp
-            filename: heartbeat
+            filename: metricbeat
 verifier:
   name: ansible

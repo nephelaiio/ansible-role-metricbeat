@@ -19,5 +19,3 @@ galaxy_info:
 
 dependencies:
   - name: nephelaiio.plugins
-  - name: nephelaiio.elastic_repo
-    when: metricbeat_repo_manage
