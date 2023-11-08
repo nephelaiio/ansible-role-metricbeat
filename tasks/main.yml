@@ -74,6 +74,7 @@
 
           {{ metricbeat_conf | to_nice_yaml(indent=2) }}
         dest: "{{ metricbeat_conf_path }}"
+        mode: 0640
       notify: metricbeat_restart
 
     - name: Manage metricbeat module configuration files
