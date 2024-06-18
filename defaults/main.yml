@@ -151,7 +151,7 @@ metricbeat_conf_logging:
     path: /var/log/metricbeat
     name: metricbeat
     keepfiles: 7
-    permissions: 0644
+    permissions: 0644 # yamllint disable-line rule:octal-values
 
 metricbeat_conf_base:
   metricbeat:
