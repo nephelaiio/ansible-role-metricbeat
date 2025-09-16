@@ -93,8 +93,9 @@ metricbeat_conf_module_postgresql_base:
 metricbeat_conf_module_postgresql_user:
   user: "{{ metricbeat_conf_postgresql_user | default(omit) }}"
   pass: "{{ metricbeat_conf_postgresql_pass | default(omit) }}"
+metricbeat_conf_module_override: "{{ (metricbeat_conf_postgresql_user is defined) and (metricbeat_conf_postgresql_pass is defined) }}"
 metricbeat_conf_module_postgresql:
-  - "{{ metricbeat_conf_module_postgresql_base | combine(metricbeat_conf_module_postgresql_user if (metricbeat_conf_postgresql_user is defined) and (metricbeat_conf_postgresql_pass is defined) else {}) }}"
+  - "{{ metricbeat_conf_module_postgresql_base | combine(metricbeat_conf_module_postgresql_user if metricbeat_conf_module_override else {}) }}"
 
 metricbeat_conf_modules_extra: []
 metricbeat_conf_modules: "{{ metricbeat_conf_modules_base + metricbeat_conf_module_postgresql + metricbeat_conf_modules_extra }}"
