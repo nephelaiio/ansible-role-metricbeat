@@ -4,7 +4,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: metricbeat-8x
+  - name: metricbeat
     image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2004}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     cgroupns_mode: host
@@ -28,7 +28,7 @@ provisioner:
   inventory:
     group_vars:
       all:
-        elasticsearch_repo_major_version: 8
+        elasticsearch_repo_major_version: 7
         metricbeat_package_hold: true
         metricbeat_conf_output:
           file:

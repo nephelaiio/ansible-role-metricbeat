@@ -101,18 +101,18 @@ metricbeat_conf_modules: "{{ metricbeat_conf_modules_base + metricbeat_conf_modu
 
 metricbeat_conf_elasticsearch_enabled: true
 metricbeat_conf_elasticsearch_port: 9200
-metricbeat_conf_elasticsearch_hosts: ['localhost']
+metricbeat_conf_elasticsearch_hosts: ["localhost"]
 metricbeat_conf_elasticsearch_loadbalance: true
 
 metricbeat_conf_logstash_enabled: false
 metricbeat_conf_logstash_port: 5044
-metricbeat_conf_logstash_hosts: ['localhost']
+metricbeat_conf_logstash_hosts: ["localhost"]
 metricbeat_conf_logstash_loadbalance: true
 
 metricbeat_conf_dashboards_enabled: false
 metricbeat_conf_dashboards_kibana: false
 metricbeat_conf_template_enabled: true
-metricbeat_conf_kibana_host: 'localhost:80'
+metricbeat_conf_kibana_host: "localhost:80"
 
 metricbeat_conf_extra: {}
 
@@ -151,7 +151,7 @@ metricbeat_conf_logging:
     path: /var/log/metricbeat
     name: metricbeat
     keepfiles: 7
-    permissions: 0644 # yamllint disable-line rule:octal-values
+    permissions: "0644"
 
 metricbeat_conf_base:
   metricbeat:
