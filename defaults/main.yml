@@ -117,8 +117,8 @@ metricbeat_conf_kibana_host: "localhost:80"
 
 metricbeat_conf_extra: {}
 
-_metricbeat_conf_port_elasticsearch: "{{ metricbeat_conf_elasticsearch_port }}:"
-_metricbeat_conf_port_logstash: "{{ metricbeat_conf_logstash_port }}:"
+_metricbeat_conf_port_elasticsearch: "{{ metricbeat_conf_elasticsearch_port }}"
+_metricbeat_conf_port_logstash: "{{ metricbeat_conf_logstash_port }}"
 
 metricbeat_conf_output_elasticsearch:
   enabled: "{{ metricbeat_conf_elasticsearch_enabled }}"
@@ -154,6 +154,9 @@ metricbeat_conf_logging:
     keepfiles: 7
     permissions: "0644"
 
+metricbeat_conf_seccomp:
+  enabled: false
+
 metricbeat_conf_base:
   metricbeat:
     config:
@@ -162,5 +165,6 @@ metricbeat_conf_base:
   output: "{{ metricbeat_conf_output }}"
   setup: "{{ metricbeat_conf_setup }}"
   logging: "{{ metricbeat_conf_logging }}"
+  seccomp: "{{ metricbeat_conf_seccomp }}"
 
 metricbeat_conf: "{{ metricbeat_conf_base | combine(metricbeat_conf_extra) }}"
