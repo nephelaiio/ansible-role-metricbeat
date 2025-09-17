@@ -13,6 +13,8 @@ defaults:
 jobs:
   lint:
     name: lint
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.
