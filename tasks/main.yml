@@ -100,7 +100,7 @@
 
     - name: Remove disabled modules
       ansible.builtin.file:
-        path: "{{ item.path }}"
+        path: "{{ item }}"
         state: absent
       loop: "{{ metricbeat_disabled_modules.files | map(attribute='path') }}"
 
