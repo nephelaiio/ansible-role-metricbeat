@@ -102,11 +102,11 @@
       ansible.builtin.file:
         path: "{{ item.path }}"
         state: absent
-      loop: "{{ metricbeat_disabled_modules.files }}"
+      loop: "{{ metricbeat_disabled_modules.files | map(attribute='path') }}"
 
     - name: Remove installation artifacts
       ansible.builtin.file:
-        path:
+        path: "{{ item }}"
         state: absent
       loop:
         - "{{ metricbeat_conf_path | dirname }}/metricbeat.reference.yml"
