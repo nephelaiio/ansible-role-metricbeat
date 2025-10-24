@@ -11,11 +11,9 @@
 - name: Disable package locks
   when: metricbeat_package_hold
   block:
-
     - name: Disable yum package lock
       when: ansible_os_family == 'RedHat'
       block:
-
         - name: Install yum version lock support
           ansible.builtin.package:
             name: yum-plugin-versionlock
@@ -46,11 +44,9 @@
 - name: Configure metricbeat
   when: metricbeat_package_state in ['present', 'latest']
   block:
-
     - name: Enable package locks
       when: metricbeat_package_hold
       block:
-
         - name: Enable apt package hold
           ansible.builtin.dpkg_selections:
             name: "{{ item }}"
@@ -95,3 +91,23 @@
 
     - name: Include service tasks
       ansible.builtin.include_tasks: service.yml
+
+    - name: List disabled modules
+      ansible.builtin.find:
+        paths: "{{ metricbeat_conf_modules_path }}"
+        patterns: "*.disabled"
+      register: metricbeat_disabled_modules
+
+    - name: Remove disabled modules
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ metricbeat_disabled_modules.files }}"
+
+    - name: Remove installation artifacts
+      ansible.builtin.file:
+        path:
+        state: absent
+      loop:
+        - "{{ metricbeat_conf_path | dirname }}/metricbeat.reference.yml"
+        - "{{ metricbeat_conf_path }}.dpkg-dist"
