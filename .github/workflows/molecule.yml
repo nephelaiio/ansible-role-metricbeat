@@ -39,4 +39,4 @@ jobs:
           MOLECULE_SCENARIO: ${{ matrix.scenario }}
           MOLECULE_DOCKER_IMAGE: ${{ matrix.image.name }}
           MOLECULE_DOCKER_COMMAND: ${{ matrix.image.command }}
-          MOLECULE_ELASTICSEARCH_MAJOR_VERSION: ${{ matrix.release }}
+          MOLECULE_BEATS_MAJOR_VERSION: ${{ matrix.release }}
