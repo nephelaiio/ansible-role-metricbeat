@@ -64,10 +64,11 @@ Please make sure your environment has [docker](https://www.docker.com) installed
 
 Role is tested against the following distributions (docker images):
 
+- Ubuntu Noble
 - Ubuntu Jammy
 - Ubuntu Focal
+- Debian Trixie
 - Debian Bookworm
-- Debian Bullseye
 - Rocky Linux 9
 
 You can test the role directly from sources using command `make test`
