@@ -55,6 +55,8 @@ metricbeat_conf_logging:
 metricbeat_conf_seccomp:
   enabled: false
 
+metricbeat_conf_fields: {}
+
 metricbeat_conf:
   metricbeat:
     config:
@@ -64,3 +66,4 @@ metricbeat_conf:
   setup: "{{ metricbeat_conf_setup }}"
   logging: "{{ metricbeat_conf_logging }}"
   seccomp: "{{ metricbeat_conf_seccomp }}"
+  fields: "{{ metricbeat_conf_fields }}"
