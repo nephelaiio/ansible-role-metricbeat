@@ -28,7 +28,7 @@ provisioner:
   inventory:
     group_vars:
       all:
-        elastic_repo_major_version: "{{ lookup('env','MOLECULE_BEATS_MAJOR_VERSION') }}"
+        elastic_repo_major_version: "{{ lookup('env','MOLECULE_BEATS_MAJOR_VERSION', default=9) }}"
         metricbeat_package_hold: true
         metricbeat_conf_output:
           file:
