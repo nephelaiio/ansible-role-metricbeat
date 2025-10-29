@@ -10,6 +10,7 @@
 .venv/
 ansible_collections/
 libvirt/
+molecule/default/roles/
 
 # globs
 **/__pycache__/**

@@ -29,7 +29,7 @@ metricbeat_conf_modules:
       - percentages
       - normalized_percentages
 
-metrccbeat_conf_output:
+metricbeat_conf_output:
   enabled: true
   hosts: "localhost:9200"
   loadbalance: false
