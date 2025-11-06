@@ -13,21 +13,22 @@ metricbeat_conf_path: /etc/metricbeat/metricbeat.yml
 metricbeat_conf_modules_path: /etc/metricbeat/modules.d
 
 metricbeat_conf_modules:
-  - module: system
-    metricsets:
-      - cpu
-      - load
-      - core
-      - diskio
-      - filesystem
-      - fsstat
-      - memory
-      - network
-      - process
-    enabled: true
-    cpu.metrics:
-      - percentages
-      - normalized_percentages
+  system:
+    - name: system
+      module: system
+      metricsets:
+        - cpu
+        - load
+        - core
+        - diskio
+        - filesystem
+        - fsstat
+        - memory
+        - network
+      enabled: true
+      cpu.metrics:
+        - percentages
+        - normalized_percentages
 
 metricbeat_conf_output:
   enabled: true

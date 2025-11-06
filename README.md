@@ -25,35 +25,7 @@ No configuration management (useful for upgrades)
 - hosts: servers
   vars:
     metricbeat_package_state: latest
-    metricbeat_conf_manage: no
-  roles:
-     - role: nephelaiio.metricbeat
-```
-
-Default configuration, active modules are auto detected from installed packages
-
-```
-- hosts: servers
-  vars:
-    metricbeat_conf_docker_hosts
-      - unix:///var/run/docker.sock
-    metricbeat_conf_postgresql_hosts:
-      - postgres://localhost:5432
-    metricbeat_conf_postgresql_user: root
-    metricbeat_conf_postgresql_pass: pass
-    metricbeat_conf_nginx_hosts:
-      - http://127.0.0.1
-    metricbeat_conf_nginx_status_path: nginx_status
-  roles:
-     - role: nephelaiio.metricbeat
-```
-
-Custom configuration, configuration deployed verbatim
-
-```
-- hosts: servers
-  vars:
-    metricbeat_conf: "{{ lookup('template', 'template.j2.yml') | from_yaml }}"
+    metricbeat_conf_manage: true
   roles:
      - role: nephelaiio.metricbeat
 ```

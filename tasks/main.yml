@@ -73,21 +73,18 @@
         mode: "u=rw,g=r,o="
       notify: metricbeat_restart
 
-    - name: Manage metricbeat module configuration files
+    - name: Manage metricbeat module configuration list
       ansible.builtin.copy:
-        dest: "{{ metricbeat_conf_modules_path }}/{{ module_name }}.yml"
+        dest: "{{ metricbeat_conf_modules_path }}/{{ item.key }}.yml"
         content: |
           ---
-          {{ module_conf | to_nice_yaml(indent=2) }}
+          {{ item.value | to_nice_yaml(indent=2) }}
         mode: "u=rw,g=r,o="
-      vars:
-        module_conf: "{{ metricbeat_conf_modules | selectattr('module', 'equalto', module_name) | list }}"
       loop_control:
-        loop_var: module_name
-        label: "{{ module_name }}"
-      notify: metricbeat_restart
-      loop: "{{ metricbeat_conf_modules | map(attribute='module') | list | unique }}"
+        label: "{{ item.key }}"
+      loop: "{{ metricbeat_conf_modules | dict2items }}"
       when: metricbeat_conf_manage
+      notify: metricbeat_restart
 
     - name: Manage metricbeat services
       ansible.builtin.service:
