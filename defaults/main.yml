@@ -25,6 +25,7 @@ metricbeat_conf_modules:
       - fsstat
       - memory
       - network
+    period: 10s
     enabled: true
     cpu.metrics:
       - percentages
