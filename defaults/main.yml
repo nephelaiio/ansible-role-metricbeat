@@ -11,6 +11,7 @@ metricbeat_service_enabled: true
 metricbeat_conf_manage: yes
 metricbeat_conf_path: /etc/metricbeat/metricbeat.yml
 metricbeat_conf_modules_path: /etc/metricbeat/modules.d
+metricbeat_conf_modules_ext: .yml
 
 metricbeat_conf_modules:
   system:
