@@ -75,7 +75,7 @@
 
     - name: Manage metricbeat module configuration list
       ansible.builtin.copy:
-        dest: "{{ metricbeat_conf_modules_path }}/{{ item.key }}.yml"
+        dest: "{{ metricbeat_conf_modules_path }}/{{ item.key }}{{ metricbeat_conf_modules_ext }}"
         content: |
           ---
           {{ item.value | to_nice_yaml(indent=2) }}
@@ -96,18 +96,52 @@
       ansible.builtin.find:
         paths: "{{ metricbeat_conf_modules_path }}"
         patterns: "*.disabled"
-      register: metricbeat_disabled_modules
+      register: metricbeat_modules_disabled
 
     - name: Remove disabled modules
       ansible.builtin.file:
         path: "{{ item }}"
         state: absent
-      loop: "{{ metricbeat_disabled_modules.files | map(attribute='path') }}"
+      loop: "{{ metricbeat_modules_disabled.files | map(attribute='path') }}"
 
-    - name: Remove installation artifacts
+    - name: Remove reference configuration
+      ansible.builtin.file:
+        path: "{{ metricbeat_conf_path | dirname }}/metricbeat.reference.yml"
+        state: absent
+
+    - name: List active modules
+      ansible.builtin.find:
+        paths: "{{ metricbeat_conf_modules_path }}"
+        patterns: "*"
+      register: metricbeat_modules_active
+
+    - name: List installation artifacts
+      ansible.builtin.find:
+        paths: "{{ metricbeat_conf_modules_path }}"
+        patterns: "*.dpkg-dist"
+        recurse: true
+      register: metricbeat_conf_artifacts
+
+    - name: Drop installation artifacts
       ansible.builtin.file:
         path: "{{ item }}"
         state: absent
-      loop:
-        - "{{ metricbeat_conf_path | dirname }}/metricbeat.reference.yml"
-        - "{{ metricbeat_conf_path }}.dpkg-dist"
+      loop: "{{ metricbeat_conf_artifacts.files | map(attribute='path') }}"
+
+    - name: List present modules
+      ansible.builtin.find:
+        paths: "{{ metricbeat_conf_modules_path }}"
+        patterns: "*"
+      register: metricbeat_modules_present
+
+    - name: Drop inactive modules
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      vars:
+        _metricbeat_conf_files: "{{ metricbeat_modules_present.files | map(attribute='path') }}"
+        _metricbeat_modules_path: "{{ metricbeat_conf_modules_path }}/"
+        _metricbeat_modules_names: "{{ metricbeat_conf_modules | dict2items | map(attribute='key') }}"
+        _metricbeat_modules_basenames: "{{ _metricbeat_modules_names | map('regex_replace', '$', metricbeat_conf_modules_ext) }}"
+        _metricbeat_modules_files: "{{ [_metricbeat_modules_path] | product(_metricbeat_modules_basenames) | map('join') }}"
+      loop: "{{ _metricbeat_modules_files | difference(_metricbeat_conf_files) | list }}"
